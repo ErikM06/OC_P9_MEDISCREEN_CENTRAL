@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="eng">
+<head>
+    <meta charset="utf-8"/>
+    <title>Add a Patient</title>
+</head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <h2>Add a new Patient</h2>
+    </div>
+    <div class="row">
+        <form th:action="@{/central/addPatient}" th:object="${patient}" method="post" class="form-horizontal" style="width: 100%">
+            <input th:field="*{patient.family}" id="family" name="family" placeholder="family">
+            <p th:if="${#fields.hasErrors('family')}" th:errorclass="error" th:errors="*{patient.family}"></p>
+            <input th:field="*{patient.given}" id="given" name="given" placeholder="given">
+            <p th:if="${#fields.hasErrors('given')}" th:errorclass="error" th:errors="*{patient.given}"></p>
+            <input th:field="*{patient.dob}" th:errorclass="fieldError"   id="dob" name="dob" placeholder="dob">
+            <p th:if="${#fields.hasErrors('dob')}" th:errorclass="error" th:errors="*{patient.dob}"></p>
+            <input th:field="*{patient.sex}" th:errorclass="fieldError"   id="sex" name="sex" placeholder="sex">
+            <p th:if="${#fields.hasErrors('sex')}" th:errorclass="error" th:errors="*{patient.sex}"></p>
+            <input th:field="*{patient.address}" th:errorclass="fieldError"   id="address" name="address" placeholder="address">
+            <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{patient.address}"></p>
+            <input th:field="*{patient.phone}" th:errorclass="fieldError"   id="phone" name="phone" placeholder="phone">
+            <p th:if="${#fields.hasErrors('phone')}" th:errorclass="error" th:errors="*{patient.phone}"></p>
+
+            <button name="Save" class="btn btn-primary" type="submit" >Save</button>
+            <a name="Cancel" class="btn btn-primary" th:href="@{/central/getPatientLs}" >Cancel</a>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>
