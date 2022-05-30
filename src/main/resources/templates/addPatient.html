@@ -4,33 +4,41 @@
 <head>
     <meta charset="utf-8"/>
     <title>Add a Patient</title>
-</head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
 <body>
 <div class="container">
-
-    <div class="row">
-        <h2>Add a new Patient</h2>
-    </div>
-    <div class="row">
-        <form th:action="@{/central/addPatient}" th:object="${patient}" method="post" class="form-horizontal" style="width: 100%">
-            <input th:field="*{patient.family}" id="family" name="family" placeholder="family">
-            <p th:if="${#fields.hasErrors('family')}" th:errorclass="error" th:errors="*{patient.family}"></p>
-            <input th:field="*{patient.given}" id="given" name="given" placeholder="given">
-            <p th:if="${#fields.hasErrors('given')}" th:errorclass="error" th:errors="*{patient.given}"></p>
-            <input th:field="*{patient.dob}" th:errorclass="fieldError"   id="dob" name="dob" placeholder="dob">
-            <p th:if="${#fields.hasErrors('dob')}" th:errorclass="error" th:errors="*{patient.dob}"></p>
-            <input th:field="*{patient.sex}" th:errorclass="fieldError"   id="sex" name="sex" placeholder="sex">
-            <p th:if="${#fields.hasErrors('sex')}" th:errorclass="error" th:errors="*{patient.sex}"></p>
-            <input th:field="*{patient.address}" th:errorclass="fieldError"   id="address" name="address" placeholder="address">
-            <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{patient.address}"></p>
-            <input th:field="*{patient.phone}" th:errorclass="fieldError"   id="phone" name="phone" placeholder="phone">
-            <p th:if="${#fields.hasErrors('phone')}" th:errorclass="error" th:errors="*{patient.phone}"></p>
-
-            <button name="Save" class="btn btn-primary" type="submit" >Save</button>
-            <a name="Cancel" class="btn btn-primary" th:href="@{/central/getPatientLs}" >Cancel</a>
-
-        </form>
+    <div th:if="${error}">
+        <div class="alert alert-danger alert-dismissible fade show">
+            <strong>Error!</strong> <span th:text="${error}"> </span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
     </div>
 </div>
+    <div class="container">
+        <div class="row">
+            <h2>Add a new Patient</h2>
+        </div>
+        <div class="row">
+            <form th:action="@{/central/validatePatient}" th:object="${patient}" method="post" class="form-horizontal" style="width: 100%">
+                <input th:field="${patient.family}" id="family" name="family" placeholder="family">
+                <p th:if="${#fields.hasErrors('family')}" th:errorclass="error" th:errors="*{patient.family}"></p>
+                <input th:field="${patient.given}" id="given" name="given" placeholder="given">
+                <p th:if="${#fields.hasErrors('given')}" th:errorclass="error" th:errors="*{patient.given}"></p>
+                <input type="date" th:field="${patient.dob}" th:errorclass="fieldError"   id="dob" name="dob" placeholder="dob">
+                <p th:if="${#fields.hasErrors('dob')}" th:errorclass="error" th:errors="*{patient.dob}"></p>
+                <input th:field="${patient.sex}" th:errorclass="fieldError"   id="sex" name="sex" placeholder="sex">
+                <p th:if="${#fields.hasErrors('sex')}" th:errorclass="error" th:errors="*{patient.sex}"></p>
+                <input th:field="${patient.address}" th:errorclass="fieldError"   id="address" name="address" placeholder="address">
+                <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{patient.address}"></p>
+                <input th:field="${patient.phone}" th:errorclass="fieldError"   id="phone" name="phone" placeholder="phone">
+                <p th:if="${#fields.hasErrors('phone')}" th:errorclass="error" th:errors="*{patient.phone}"></p>
+
+                <button name="Save" class="btn btn-primary" type="submit" >Save</button>
+                <a name="Cancel" class="btn btn-primary" th:href="@{/central/getPatientLs}" >Cancel</a>
+
+            </form>
+        </div>
+    </div>
 </body>
 </html>

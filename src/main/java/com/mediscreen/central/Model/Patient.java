@@ -1,9 +1,19 @@
 package com.mediscreen.central.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+
+@Data
+@ToString
+@EqualsAndHashCode
+@Component
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Patient {
 
@@ -12,6 +22,7 @@ public class Patient {
     private String name;
     private String family;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
     private String given;
     private String sex;
@@ -24,14 +35,6 @@ public class Patient {
         this.family = family;
         this.dob = dob;
         this.given = given;
-        this.sex = sex;
-        this.address = address;
-        this.phone = phone;
-    }
-
-    // Used to assert if a patient already exist
-    public Patient(Date dob, String sex, String address, String phone) {
-        this.dob = dob;
         this.sex = sex;
         this.address = address;
         this.phone = phone;

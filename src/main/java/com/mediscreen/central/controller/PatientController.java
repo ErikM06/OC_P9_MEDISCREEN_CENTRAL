@@ -1,22 +1,21 @@
 package com.mediscreen.central.controller;
 
 import com.mediscreen.central.Model.Patient;
+import com.mediscreen.central.customExceptions.FamilyDoesNotMatchException;
 import com.mediscreen.central.service.PatientRepoService;
 import com.mediscreen.central.service.util.DateParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.text.ParseException;
-import java.util.Date;
+import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -31,19 +30,21 @@ public class PatientController {
     @Autowired
     DateParser parser;
 
+
+
     @GetMapping ("/getPatientList")
-    public String getPatient(Model model) {
+    public String getPatient(Model model,@RequestParam(value = "error", required = false) String error) {
 
         model.addAttribute("patientList",patientService.getAllPatient());
-
+        if (null != error) {
+            model.addAttribute("error", error);
+        }
         return "patientList";
     }
 
     @GetMapping ("/getPatientByFamily")
     public String getPatientByFamily (Model model, @RequestParam String family){
-
         model.addAttribute("patientList",patientService.getAllPatientByFamily(family));
-
         return "patientList";
     }
 
@@ -53,19 +54,16 @@ public class PatientController {
         return "addPatient";
     }
 
-    @PostMapping("/addPatient")
-    public ResponseEntity<Patient> addAPatient (@RequestParam String family, String given, String dob, String sex, String address, String phone){
-        Date dobToDate = null;
+    @PostMapping("/validatePatient")
+    public ModelAndView addAPatient (@ModelAttribute (value = "patient") Patient patient, BindingResult result){
         try {
-            dobToDate = parser.stringToDate(dob);
-        } catch (ParseException e) {
-            logger.info("in post method /addPatient");
-            e.getMessage();
+            patientService.addAPatientClient(patient);
+        } catch (FamilyDoesNotMatchException e) {
+            logger.info("error "+ patient.getFamily()+" does not exist / In validatePatient");
+            return new ModelAndView("addPatient", "error", e.getMessage());
         }
-        Patient patient = new Patient(family,given,dobToDate,sex,address,phone);
-        patientService.addAPatientClient(patient);
 
-    return  new ResponseEntity<>(patient, HttpStatus.ACCEPTED);
+        return new ModelAndView("redirect:patientList");
     }
 
 }
