@@ -2,8 +2,10 @@ package com.mediscreen.central.controller;
 
 import com.mediscreen.central.Model.Patient;
 import com.mediscreen.central.customExceptions.FamilyDoesNotMatchException;
+import com.mediscreen.central.customExceptions.NotFoundException;
 import com.mediscreen.central.service.RepoCentralClient;
 import com.mediscreen.central.service.util.DateParser;
+import com.mediscreen.central.service.util.PatientClientErrorHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -96,9 +99,14 @@ public class PatientController {
     }
 
     @GetMapping("/deletePatientById/{id}")
-    public ModelAndView deletePatientById (@PathVariable (value = "id") Long id) {
+    public ModelAndView deletePatientById (@PathVariable (value = "id") Long id, PatientClientErrorHandler patientClientErrorHandler) throws NotFoundException {
         logger.info("in /deletePatientById");
-        patientService.deletePatientById(id);
+        try {
+            patientService.deletePatientById(id);
+        } catch (RestClientResponseException e){
+
+            return new ModelAndView("redirect:/central/getPatientList", "error", patientClientErrorHandler.mountMessage(e));
+        }
         return new ModelAndView("redirect:/central/getPatientList");
     }
 

@@ -3,8 +3,11 @@ package com.mediscreen.central.service;
 import com.mediscreen.central.Model.Patient;
 import com.mediscreen.central.customExceptions.FamilyDoesNotMatchException;
 import com.mediscreen.central.service.util.FamilyTypes;
+import com.mediscreen.central.service.util.PatientClientErrorHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +30,16 @@ import java.util.List;
 public class RepoCentralClient {
 
     Logger logger = LoggerFactory.getLogger(RepoCentralClient.class);
+
+    private RestTemplate restTemplate;
+
+    @Autowired
+    public RepoCentralClient (RestTemplateBuilder restTemplateBuilder){
+        restTemplate = restTemplateBuilder
+                .errorHandler(new PatientClientErrorHandler())
+                .build();
+    };
+
 
     private final String baseUrl = "http://localhost:8081";
     private final String patientUrl = "/patient";
@@ -57,16 +70,20 @@ public class RepoCentralClient {
      * Read method
      * @return all patient as a list
      */
-    public List<Patient> getAllPatient (){
-        RestTemplate restTemplate = new RestTemplate();
+    public List<?> getAllPatient (){
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        ResponseEntity<List<Patient>> patientLs = restTemplate.exchange(baseUrl + patientUrl + getAllPatient,
+        ResponseEntity<List<Patient>> patientLs = null;
+
+
+        patientLs = restTemplate.exchange(baseUrl + patientUrl + getAllPatient,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<>() {
                 }
+
         );
 
         return patientLs.getBody();
@@ -78,7 +95,6 @@ public class RepoCentralClient {
      * @return all patient with a given family type as a list
      */
     public List<Patient> getAllPatientByFamily (String family) {
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -99,7 +115,6 @@ public class RepoCentralClient {
      * @throws FamilyDoesNotMatchException
      */
     public void addAPatientClient (Patient patient) throws FamilyDoesNotMatchException {
-        RestTemplate restTemplate = new RestTemplate();
         if (getAllFamilyType().stream().noneMatch(s -> s.equals(patient.getFamily()))){
             logger.info("Error in patientService getByFamily : FamilyDoesNotMatchException");
             throw new FamilyDoesNotMatchException("family "+ patient.getFamily()+" does not match any family");
@@ -108,8 +123,9 @@ public class RepoCentralClient {
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Patient> patientRequest = new HttpEntity<>(patient);
-        ResponseEntity<Patient> patientResponseEntity = restTemplate.postForEntity(baseUrl + patientUrl + addAPatient
-                ,patientRequest, Patient.class);
+
+        restTemplate.postForEntity(baseUrl + patientUrl + addAPatient
+                , patientRequest, Patient.class);
 
     }
 
@@ -123,20 +139,21 @@ public class RepoCentralClient {
      */
     public void updatePatientClient (Patient patient, Long id) throws FamilyDoesNotMatchException {
         logger.info("in updatePatientClient, id is: "+patient.getId());
-
-        RestTemplate restTemplate = new RestTemplate();
         if (getAllFamilyType().stream().noneMatch(s -> s.equals(patient.getFamily()))){
             logger.info("Error in patientService updatePatientClient : FamilyDoesNotMatchException");
             throw new FamilyDoesNotMatchException("family "+ patient.getFamily()+" does not match any family");
         }
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         patient.setId(id);
         HttpEntity<Patient> patientRequest = new HttpEntity<>(patient);
-        ResponseEntity<Patient> patientResponseEntity = restTemplate.postForEntity(baseUrl + patientUrl + updateAPatient
-                ,patientRequest
-                ,Patient.class);
+
+        restTemplate.postForEntity(baseUrl + patientUrl + updateAPatient
+                , patientRequest
+                , Patient.class);
+
     }
 
     /**
@@ -145,29 +162,24 @@ public class RepoCentralClient {
      * @return Patient with the given id
      */
     public Patient getPatientById(Long id) {
-
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         ResponseEntity<Patient> patientResponseEntity = restTemplate.getForEntity(baseUrl + patientUrl + getById +
-                        "?id=" +id,
+                        "?id=" + id,
                 Patient.class);
 
         return patientResponseEntity.getBody();
     }
 
     public void deletePatientById(Long id) {
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         restTemplate.delete(baseUrl + patientUrl + deleteById +
-                        "?id=" +id);
-
-
+                "?id=" +id);
     }
 
 }
