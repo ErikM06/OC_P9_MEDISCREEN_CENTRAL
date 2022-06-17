@@ -15,6 +15,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @Component
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Patient {
 
     private Long id;

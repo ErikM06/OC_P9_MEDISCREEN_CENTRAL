@@ -29,15 +29,15 @@ public class SecurityConfig {
             try {
                 authorize
                         .antMatchers("/resources/**", "/login").permitAll()
-                        .antMatchers("/admin/**").hasRole("ADMIN")
                         .antMatchers("/central/**").authenticated()
+                        .antMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                         .and().exceptionHandling()
                         .and()
                         .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/central/getPatientList")
                         .and()
                         .logout().logoutSuccessUrl("/");
-                http.cors().and().csrf().disable();
+                http.csrf().disable();
             } catch (Exception e) {
                 logger.info("in exception customSecurityFilter "+e.getMessage());
                 throw new RuntimeException(e);

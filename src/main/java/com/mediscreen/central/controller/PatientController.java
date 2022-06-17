@@ -1,9 +1,8 @@
 package com.mediscreen.central.controller;
 
 import com.mediscreen.central.Model.Patient;
-import com.mediscreen.central.customExceptions.FamilyDoesNotMatchException;
 import com.mediscreen.central.customExceptions.NotFoundException;
-import com.mediscreen.central.service.RepoCentralClient;
+import com.mediscreen.central.proxy.PatientClientProxy;
 import com.mediscreen.central.service.util.DateParser;
 import com.mediscreen.central.service.util.PatientClientErrorHandler;
 import org.slf4j.Logger;
@@ -26,10 +25,14 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/central")
 public class PatientController {
 
+    private final PatientClientProxy patientClientProxy;
+
+    public PatientController (PatientClientProxy patientClientProxy){
+        this.patientClientProxy=patientClientProxy;
+    }
+
     Logger logger = LoggerFactory.getLogger(PatientController.class);
 
-    @Autowired
-    RepoCentralClient patientService;
 
     @Autowired
     DateParser parser;
@@ -39,7 +42,7 @@ public class PatientController {
     @GetMapping ("/getPatientList")
     public String getPatient(Model model,@RequestParam(value = "error", required = false) String error) {
 
-        model.addAttribute("patientList",patientService.getAllPatient());
+        model.addAttribute("patientList",patientClientProxy.getPatientList());
         if (null != error) {
             model.addAttribute("error", error);
         }
@@ -48,7 +51,7 @@ public class PatientController {
 
     @GetMapping ("/getPatientByFamily")
     public String getPatientByFamily (Model model, @RequestParam String family){
-        model.addAttribute("patientList",patientService.getAllPatientByFamily(family));
+        model.addAttribute("patientList",patientClientProxy.getPatientByFamily(family));
         return "patientList";
     }
 
@@ -71,30 +74,21 @@ public class PatientController {
      */
     @PostMapping("/validatePatient")
     public ModelAndView addAPatient (@ModelAttribute (value = "patient") Patient patient, BindingResult result){
-        try {
-            patientService.addAPatientClient(patient);
-        } catch (FamilyDoesNotMatchException e) {
-            logger.info("error "+ patient.getFamily()+" does not exist / In validatePatient");
-            return new ModelAndView("addPatient", "error", e.getMessage());
-        }
+        patientClientProxy.addPatient(patient);
 
         return new ModelAndView("redirect:/central/getPatientList");
     }
 
     @GetMapping ("/updatePatient/{id}")
     public String updateAPatient (Model model, @PathVariable (value = "id") Long id) {
-        model.addAttribute("patient", patientService.getPatientById(id));
+        model.addAttribute("patient", patientClientProxy.getPatientById(id));
         return "updatePatient";
     }
 
     @PostMapping ("/validateUpdate/{id}")
     public ModelAndView validatePatientUpdate (@ModelAttribute (value = "patient") Patient patient, @PathVariable (value ="id") Long id) {
-        try {
-            logger.info("in /validateUpdate");
-            patientService.updatePatientClient(patient, id);
-        } catch (FamilyDoesNotMatchException e) {
-            return new ModelAndView("updatePatient", "error", e.getMessage());
-        }
+        logger.info("in /validateUpdate");
+        patientClientProxy.updatePatient(patient);
         return new ModelAndView("redirect:/central/getPatientList");
     }
 
@@ -102,7 +96,7 @@ public class PatientController {
     public ModelAndView deletePatientById (@PathVariable (value = "id") Long id, PatientClientErrorHandler patientClientErrorHandler) throws NotFoundException {
         logger.info("in /deletePatientById");
         try {
-            patientService.deletePatientById(id);
+            patientClientProxy.deletePatient(id);
         } catch (RestClientResponseException e){
 
             return new ModelAndView("redirect:/central/getPatientList", "error", patientClientErrorHandler.mountMessage(e));
