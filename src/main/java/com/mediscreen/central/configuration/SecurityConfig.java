@@ -1,6 +1,6 @@
 package com.mediscreen.central.configuration;
 
-import com.mediscreen.central.service.UserService;
+import com.mediscreen.central.proxy.UserClientProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class SecurityConfig {
     Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     @Autowired
-    UserService userService;
+    UserClientProxy userClientProxy;
 
     @Bean
     SecurityFilterChain customSecurityFilter(HttpSecurity http) throws Exception {
