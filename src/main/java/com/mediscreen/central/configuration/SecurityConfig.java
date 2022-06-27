@@ -1,9 +1,8 @@
 package com.mediscreen.central.configuration;
 
-import com.mediscreen.central.proxy.UserClientProxy;
+import com.mediscreen.central.service.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,8 +19,12 @@ public class SecurityConfig {
 
     Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
-    @Autowired
-    UserClientProxy userClientProxy;
+
+    private final UserDetailsServiceImpl userDetailsService;
+
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     SecurityFilterChain customSecurityFilter(HttpSecurity http) throws Exception {
@@ -36,12 +39,11 @@ public class SecurityConfig {
                         .and()
                         .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/central/getPatientList")
                         .and()
-                        .logout().logoutSuccessUrl("/");
+                        .logout().logoutSuccessUrl("/logout");
                 http.csrf().disable();
             } catch (Exception e) {
                 logger.info("in exception customSecurityFilter "+e.getMessage());
                 throw new RuntimeException(e);
-
             }
         });
         return http.build();

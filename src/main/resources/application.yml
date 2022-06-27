@@ -1,0 +1,52 @@
+
+logging:
+  level:
+    com.mediscreen.central: DEBUG
+server:
+  port: 8080
+spring:
+  security:
+    user:
+      password: ${passwordS}
+  application:
+    name: mediscreen-client
+  cloud:
+    gateway:
+      routes:
+        - id: mediscreen-user
+          uri: lb://mediscreen-user
+          predicates:
+            - Path=/user/**
+
+        - id: mediscreen-patient
+          uri: lb://mediscreen-patient
+          predicates:
+            - Path=/patient/**
+
+
+        - id: mediscreen_hist
+          uri: lb://mediscreen-hist
+          predicates:
+            - Path=/patHistory/**
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}-${random.uuid}
+
+

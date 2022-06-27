@@ -9,5 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UserClientProxy {
 
     @GetMapping (value = "/getUser")
-    User getUserByUsernameAndPassword(@RequestParam String username, String password);
+    User getUserByUsernameAndPassword(@RequestParam String username);
+
 }
