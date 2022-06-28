@@ -32,13 +32,11 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-
   main:
     web-application-type: reactive
     allow-bean-definition-overriding: true
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+
+
 
 
 
@@ -48,5 +46,7 @@ eureka:
       default-zone: http://localhost:8761/eureka/
   instance:
     instance-id: ${spring.application.name}-${random.uuid}
+
+
 
 

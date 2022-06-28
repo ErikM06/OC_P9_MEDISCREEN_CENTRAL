@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="eng">
+<head>
+    <meta charset="UTF-8">
+    <title>PatientHist list</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col text-centered">
+            <h2>Patient History list</h2>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="left-align">
+        <a class="btn btn-primary" th:href="@{/central/addPatientHist}" role="button"> Add</a>
+    </div>
+</div>
+<div class="row">
+    <table class="table table-bordered centered">
+        <thead>
+        <tr style="text-align:center">
+            <th>id</th>
+            <th>patient Id</th>
+            <th>content</th>
+            <th>family</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="patientHist:${patHistList}" style="text-align:center">
+            <td><span th:text="${patientHist.id}"></span></td>
+            <td><span th:text="${patientHist.patId}"></span></td>
+            <td><span th:text="${patientHist.content}"></span></td>
+            <td><span th:text="${patientHist.family}"></span></td>
+            <td>
+                <a class="btn btn-primary" th:href="@{/central/updatePatient/{id}(id=${patientHist.id})}" role="button"> Edit</a>
+                <a class="btn btn-primary" th:href="@{/central/deletePatientById/{id}(id=${patientHist.id})}" role="button"> Delete</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>

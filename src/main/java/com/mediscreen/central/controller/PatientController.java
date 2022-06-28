@@ -20,39 +20,36 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/central")
 public class PatientController {
-
+    Logger logger = LoggerFactory.getLogger(PatientController.class);
     private final PatientClientProxy patientClientProxy;
 
     public PatientController (PatientClientProxy patientClientProxy){
         this.patientClientProxy=patientClientProxy;
     }
 
-    Logger logger = LoggerFactory.getLogger(PatientController.class);
-
-
     @Autowired
     DateParser parser;
-
-
-
     @GetMapping ("/getPatientList")
-    public String getPatient(Model model,@RequestParam(value = "error", required = false) String error) {
+    public String getPatient(Model model, @RequestParam(value = "error", required = false) String error) {
 
-        model.addAttribute("patientList",patientClientProxy.getPatientList());
+        model.addAttribute("patientList",  patientClientProxy.getPatientList());
         if (null != error) {
             model.addAttribute("error", error);
         }
-        return "patientList";
+        return "patientTemplate/patientList";
     }
 
     @GetMapping ("/getPatientByFamily")
     public String getPatientByFamily (Model model, @RequestParam String family){
-        model.addAttribute("patientList",patientClientProxy.getPatientByFamily(family));
-        return "patientList";
+        List<Patient> patientls = patientClientProxy.getPatientByFamily(family);
+        model.addAttribute("patientList",patientls);
+        return "patientTemplate/patientList";
     }
 
     /**
@@ -63,14 +60,14 @@ public class PatientController {
     @GetMapping("/addPatient")
     public String addPatientView (Model model){
         model.addAttribute("patient",new Patient());
-        return "addPatient";
+        return "patientTemplate/addPatient";
     }
 
     /**
      *
      * @param patient
      * @param result
-     * @return a redirect to the patient list if success OR addPatient.html if fails
+     * @return a redirect to the patient list if success OR addPatientHist.html if fails
      */
     @PostMapping("/validatePatient")
     public ModelAndView addAPatient (@ModelAttribute (value = "patient") Patient patient, BindingResult result){
@@ -82,7 +79,7 @@ public class PatientController {
     @GetMapping ("/updatePatient/{id}")
     public String updateAPatient (Model model, @PathVariable (value = "id") Long id) {
         model.addAttribute("patient", patientClientProxy.getPatientById(id));
-        return "updatePatient";
+        return "patientTemplate/updatePatient";
     }
 
     @PostMapping ("/validateUpdate/{id}")
