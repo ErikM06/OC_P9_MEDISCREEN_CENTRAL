@@ -19,6 +19,9 @@ public interface PatientHistClientProxy {
     @GetMapping ("/getById")
     PatientHist getPatientHistById (@RequestParam String id);
 
+    @GetMapping ("/getByPatId")
+    List<PatientHist> getPatientHistByPatId (@RequestParam Long id);
+
     @GetMapping ("/getAllPatientHistory")
     List<PatientHist> getAllPatientsHist();
 

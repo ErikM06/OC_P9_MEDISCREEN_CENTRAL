@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" lang="eng">
+
 <head>
     <meta charset="UTF-8">
     <title>PatientHist list</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
 </head>
 <body>
 <div class="container">
@@ -24,19 +27,24 @@
         <tr style="text-align:center">
             <th>id</th>
             <th>patient Id</th>
-            <th>content</th>
             <th>family</th>
+            <th>content</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="patientHist:${patHistList}" style="text-align:center">
             <td><span th:text="${patientHist.id}"></span></td>
             <td><span th:text="${patientHist.patId}"></span></td>
-            <td><span th:text="${patientHist.content}"></span></td>
             <td><span th:text="${patientHist.family}"></span></td>
             <td>
-                <a class="btn btn-primary" th:href="@{/central/updatePatient/{id}(id=${patientHist.id})}" role="button"> Edit</a>
-                <a class="btn btn-primary" th:href="@{/central/deletePatientById/{id}(id=${patientHist.id})}" role="button"> Delete</a>
+                <div class="card">
+                    <div class="card-body" th:text="${patientHist.content}">
+                    </div>
+                </div>
+            </td>
+            <td>
+                <a class="btn btn-primary" th:href="@{/central/updatePatientHist/{id}(id=${patientHist.id})}" role="button"> Edit</a>
+                <a class="btn btn-primary" th:href="@{/central/deletePatientHistById/{id}(id=${patientHist.id})}" role="button"> Delete</a>
             </td>
 
         </tr>
