@@ -1,4 +1,4 @@
-package com.mediscreen.central.Model;
+package com.mediscreen.central.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

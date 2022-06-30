@@ -1,12 +1,7 @@
-package com.mediscreen.central.Model;
+package com.mediscreen.central.model;
 
 
-import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-
+/*
 @Data
 public class User implements UserDetails {
 
@@ -80,4 +75,4 @@ public class User implements UserDetails {
     }
 
 
-}
+} */

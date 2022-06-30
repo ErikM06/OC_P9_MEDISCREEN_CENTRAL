@@ -1,18 +1,6 @@
 package com.mediscreen.central.configuration;
 
-import com.mediscreen.central.service.UserDetailsServiceImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-
+/*
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -31,7 +19,7 @@ public class SecurityConfig {
                         .antMatchers("/central/**").authenticated()
                         .antMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
-                        .formLogin().loginPage("/login.html").loginProcessingUrl("/login").permitAll().defaultSuccessUrl("/central/getPatientList")
+                        .formLogin().loginPage("/login").loginProcessingUrl("/login").permitAll().defaultSuccessUrl("/central/getPatientList")
                         .and()
                         .logout().logoutSuccessUrl("/logout");
                 http.csrf().disable();
@@ -51,4 +39,4 @@ public class SecurityConfig {
 
 
 
-}
+} */

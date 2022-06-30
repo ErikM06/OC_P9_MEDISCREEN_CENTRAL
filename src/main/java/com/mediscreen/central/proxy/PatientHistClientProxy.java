@@ -1,6 +1,6 @@
 package com.mediscreen.central.proxy;
 
-import com.mediscreen.central.Model.PatientHist;
+import com.mediscreen.central.model.PatientHist;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,6 +1,6 @@
 package com.mediscreen.central.proxy;
 
-import com.mediscreen.central.Model.Patient;
+import com.mediscreen.central.model.Patient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;

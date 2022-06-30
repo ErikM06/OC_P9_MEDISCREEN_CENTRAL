@@ -1,6 +1,6 @@
 package com.mediscreen.central.controller;
 
-import com.mediscreen.central.Model.Patient;
+import com.mediscreen.central.model.Patient;
 import com.mediscreen.central.customExceptions.NotFoundException;
 import com.mediscreen.central.proxy.PatientClientProxy;
 import com.mediscreen.central.service.util.DateParser;
