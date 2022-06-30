@@ -5,9 +5,6 @@ logging:
 server:
   port: 8080
 spring:
-  security:
-    user:
-      password: ${passwordS}
   application:
     name: mediscreen-client
   cloud:
