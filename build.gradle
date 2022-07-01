@@ -19,6 +19,8 @@ dependencies {
   //  implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'com.nimbusds:nimbus-jose-jwt:9.23'
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.jsoniter:jsoniter:0.9.23'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'

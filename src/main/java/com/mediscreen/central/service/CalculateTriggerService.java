@@ -9,8 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @Service
 public class CalculateTriggerService {
@@ -23,20 +24,20 @@ public class CalculateTriggerService {
     PatientHistContentReader patientHistContentReader;
 
     public Integer getTriggerCount (Long id){
-        AtomicReference<Integer> triggerCount = new AtomicReference<>(0);
+        List<String> triggerCountLs = new ArrayList<>();
         List<PatientHist> patientHistLs = patientHistClientProxy.getPatientHistByPatId(id);
         List<String> triggers = WordsTrigger.listOfWordTriggers;
 
         patientHistLs.forEach (patientHist -> {
             List<String> contentWords = patientHistContentReader.ToStringListConvertor(patientHist.getContent());
+
             contentWords.forEach(cw -> {
-                if (triggers.contains(cw)) {
-                   triggerCount.getAndSet(triggerCount.get() + 1);
-                }
+                   triggerCountLs.addAll(triggers.stream().filter(t-> t.equals(cw)).collect(Collectors.toList()));
+                   logger.info("in getTriggerCount "+ cw);
             });
         });
-        logger.info("in getTriggerCount "+ triggerCount.get());
-        return triggerCount.get();
+        logger.info("in getTriggerCount "+ triggerCountLs.size());
+        return triggerCountLs.size();
     }
 
 

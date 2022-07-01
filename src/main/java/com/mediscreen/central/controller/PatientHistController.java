@@ -11,6 +11,8 @@ import com.mediscreen.central.service.util.PatientClientErrorHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,10 +79,10 @@ public class PatientHistController {
      * @return a redirect to the patient list if success OR addPatientHist.html if fails
      */
     @PostMapping("/validatePatientHist")
-    public ModelAndView addAPatient (@ModelAttribute(value = "patientHist")PatientHist patientHist){
+    public ResponseEntity<String> addAPatient (@ModelAttribute(value = "patientHist")PatientHist patientHist){
         patientHistClientProxy.addPatientHistory(patientHist);
 
-        return new ModelAndView("redirect:/central/getPatientHistList");
+        return new ResponseEntity<>("redirect:/central/getPatientHistList", HttpStatus.ACCEPTED);
     }
 
     @GetMapping ("/updatePatientHist/{id}")

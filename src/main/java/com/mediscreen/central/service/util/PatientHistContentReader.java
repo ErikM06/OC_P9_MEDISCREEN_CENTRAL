@@ -1,13 +1,12 @@
 package com.mediscreen.central.service.util;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Component
 public class PatientHistContentReader {
@@ -17,15 +16,16 @@ public class PatientHistContentReader {
 
     public List<String> ToStringListConvertor (String patHistoryContent){
         List<String> contentToList = new ArrayList<>();
-        Pattern p = Pattern.compile("[A-zA-Z]");
-        Matcher m = p.matcher(patHistoryContent);
-        while (m.find()){
-            String matchedString = m.toString();
-            contentToList.add(matchedString);
+        // replace all "," by " "
 
-        }
-        logger.info("in PatientHistContentReader "+ contentToList);
+        String formatContent = patHistoryContent.replace(",","");
+        // all words to an array
+        String[] split = StringUtils.split(formatContent);
+        contentToList = List.of(split);
+        // assert every word triggered in content
+       // contentToList.forEach(w -> logger.info("in PatientHistContentReader "+ w));
 
-    return contentToList;
+
+        return contentToList;
     }
 }

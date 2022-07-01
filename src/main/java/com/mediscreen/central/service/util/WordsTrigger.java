@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface WordsTrigger {
 
-    List<String> listOfWordTriggers = new ArrayList<>(Arrays.asList("Hémoglobine A1C","Microalbumine","Taille", "Poids",
-            "Fumeur", "Anormal", "Cholestérol","Vertige","Rechute","Réaction","Anticorps"));
+    List<String> listOfWordTriggers = new ArrayList<>(Arrays.asList("A1C","Microalbumin","Height", "Weight",
+            "Smoker", "Abnormal", "Cholesterol","Dizziness","Relapse","Reaction","Antibodies"));
 }
