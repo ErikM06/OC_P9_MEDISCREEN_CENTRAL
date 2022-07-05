@@ -1,24 +1,22 @@
 package com.mediscreen.central.controller;
 
-import com.mediscreen.central.model.Patient;
 import com.mediscreen.central.customExceptions.NotFoundException;
+import com.mediscreen.central.customExceptions.PatientAlreadyExistException;
+import com.mediscreen.central.model.Patient;
 import com.mediscreen.central.proxy.PatientClientProxy;
+import com.mediscreen.central.proxy.PatientHistClientProxy;
 import com.mediscreen.central.service.util.DateParser;
-import com.mediscreen.central.service.util.PatientClientErrorHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestClientResponseException;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -29,8 +27,11 @@ public class PatientController {
     Logger logger = LoggerFactory.getLogger(PatientController.class);
     private final PatientClientProxy patientClientProxy;
 
-    public PatientController (PatientClientProxy patientClientProxy){
+    private final PatientHistClientProxy patientHistClientProxy;
+
+    public PatientController (PatientClientProxy patientClientProxy, PatientHistClientProxy patientHistClientProxy){
         this.patientClientProxy=patientClientProxy;
+        this.patientHistClientProxy = patientHistClientProxy;
     }
 
     @Autowired
@@ -58,22 +59,27 @@ public class PatientController {
      * @return UI for 'addPatient'
      */
     @GetMapping("/addPatient")
-    public String addPatientView (Model model){
+    public String addPatientView (Model model, @RequestParam(value ="error", required = false) String error){
         model.addAttribute("patient",new Patient());
+        model.addAttribute("error", error);
         return "patientTemplate/addPatient";
     }
 
     /**
      *
      * @param patient
-     * @param result
      * @return a redirect to the patient list if success OR addPatientHist.html if fails
      */
     @PostMapping("/validatePatient")
-    public ModelAndView addAPatient (@ModelAttribute (value = "patient") Patient patient, BindingResult result){
-        patientClientProxy.addPatient(patient);
+    public String addAPatient (@ModelAttribute (value = "patient") Patient patient){
+        try {
+            patientClientProxy.addPatient(patient);
+        } catch (PatientAlreadyExistException e){
+            e.getMessage();
+            return "patientTemplate/addPatient";
+        }
 
-        return new ModelAndView("redirect:/central/getPatientList");
+        return "redirect:/central/getPatientList";
     }
 
     @GetMapping ("/updatePatient/{id}")
@@ -83,22 +89,21 @@ public class PatientController {
     }
 
     @PostMapping ("/validateUpdate/{id}")
-    public ModelAndView validatePatientUpdate (@ModelAttribute (value = "patient") Patient patient, @PathVariable (value ="id") Long id) {
+    public String validatePatientUpdate (@ModelAttribute (value = "patient") Patient patient, @PathVariable (value ="id") Long id) {
         logger.info("in /validateUpdate");
         patientClientProxy.updatePatient(patient);
-        return new ModelAndView("redirect:/central/getPatientList");
+        return "redirect:/central/getPatientList";
     }
 
     @GetMapping("/deletePatientById/{id}")
-    public ModelAndView deletePatientById (@PathVariable (value = "id") Long id, PatientClientErrorHandler patientClientErrorHandler) throws NotFoundException {
+    public String deletePatientById (@PathVariable (value = "id") Long id) throws NotFoundException {
         logger.info("in /deletePatientById");
         try {
             patientClientProxy.deletePatient(id);
-        } catch (RestClientResponseException e){
-
-            return new ModelAndView("redirect:/central/getPatientList", "error", patientClientErrorHandler.mountMessage(e));
+        } catch (NotFoundException e){
+            return "redirect:/central/getPatientList";
         }
-        return new ModelAndView("redirect:/central/getPatientList");
+        return "redirect:/central/getPatientList";
     }
 
 

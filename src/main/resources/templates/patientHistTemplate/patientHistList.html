@@ -44,7 +44,7 @@
             </td>
             <td>
                 <a class="btn btn-primary" th:href="@{/central/updatePatientHist/{id}(id=${patientHist.id})}" role="button"> Edit</a>
-                <a class="btn btn-primary" th:href="@{/central/deletePatientHistById/{id}(id=${patientHist.id})}" role="button"> Delete</a>
+                <a class="btn btn-primary" th:href="@{/central/deletePatientHistById/{patId}(patId=${patientHist.patId})'&'{id}(id=${patientHist.id})}" role="button"> Delete</a>
             </td>
 
         </tr>

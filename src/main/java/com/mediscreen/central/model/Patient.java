@@ -1,6 +1,5 @@
 package com.mediscreen.central.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -14,28 +13,30 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 @Component
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-
 public class Patient {
 
     private Long id;
 
-    private String name;
+    private String firstname;
+
+    private String lastname;
+
     private String family;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
+
     private String given;
     private String sex;
     private String address;
     private String phone;
 
 
-    public Patient(String family, String given, Date dob, String sex, String address, String phone) {
 
-        this.family = family;
+    Patient (String firstname, String lastname, Date dob, String sex, String address, String phone){
+        this.firstname =firstname;
+        this.lastname = lastname;
         this.dob = dob;
-        this.given = given;
         this.sex = sex;
         this.address = address;
         this.phone = phone;
@@ -44,5 +45,7 @@ public class Patient {
     public Patient() {
 
     }
+
+
 }
 

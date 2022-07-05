@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PatientHist {
 
+
     private String id;
 
     @JsonProperty ("patId")
@@ -37,6 +38,12 @@ public class PatientHist {
         this.id = id;
         this.patId = patId;
         this.content = content;
+        this.family = family;
+    }
+
+    public PatientHist(String id, long patId, String family) {
+        this.id = id;
+        this.patId = patId;
         this.family = family;
     }
 

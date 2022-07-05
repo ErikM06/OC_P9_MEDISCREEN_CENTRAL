@@ -20,16 +20,18 @@
             <h2>update a Patient</h2>
         </div>
         <div class="row">
-            <form th:action="@{/central/validatePatientHistUpdate/{id}(id=${patientHist.id})}" th:object="${patientHist}" th:method="post" class="form-horizontal" style="width: 100%">
+            <form th:action="@{/central/validatePatientHistUpdate/{id}(id=${patientHist.id})}" th:object="${patientHist}" id="validatePatientHistForm" th:method="post" class="form-horizontal" style="width: 100%">
                 <div>
                     <span  th:text="${patientHist.patId}"></span>
                 </div>
                 <div>
                     <span  th:text="${patientHist.family}"></span>
                 </div>
+                <a> Content</a>
                 <div class="mb-3">
-                    <label for="content" th:field="${patientHist.content}"   class="form-label">content</label>
-                    <textarea class="form-control" id="content" rows="3"></textarea>
+                    <label>
+                        <textarea  name="content" th:field="*{content}"  rows="5" cols="50" form="validatePatientHistForm"></textarea>
+                    </label>
                 </div>
                 <button name="Save" class="btn btn-primary" type="submit" >Save</button>
                 <a name="Cancel" class="btn btn-primary" th:href="@{/central/getPatientLs}" >Cancel</a>

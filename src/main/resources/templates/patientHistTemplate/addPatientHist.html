@@ -21,16 +21,24 @@
     </div>
 
     <div class="row">
-        <form th:action="@{/central/validatePatientHist}" th:object="${patientHist}" method="post" class="form-horizontal" style="width: 100%">
+        <form th:action="@{/central/validatePatientHist/{id}(id=${patientHist.id})}" th:object="${patientHist}" id="validatePatientHistForm" method="post" class="form-horizontal" style="width: 100%">
+            <a> Patient id</a>
             <div>
-                <span  th:text="${patientHist.patId}"></span>
+                <label>
+                    <input type="text" th:field="*{patId}" th:value="*{patId}" >
+                </label>
             </div>
+            <a> Family type</a>
             <div>
-                <span  th:text="${patientHist.family}"></span>
+                <label>
+                    <input type="text" th:field="*{family}" th:value="*{family}" >
+                </label>
             </div>
+            <a> Content</a>
             <div class="mb-3">
-                <label for="content" th:field="${patientHist.content}"   class="form-label">content</label>
-                <textarea class="form-control" id="content" rows="3"></textarea>
+                <label>
+                    <textarea  name="content" th:field="*{content}"  rows="5" cols="50" form="validatePatientHistForm"></textarea>
+                </label>
             </div>
 
             <button name="Save" class="btn btn-primary" type="submit" >Save</button>
