@@ -1,16 +1,13 @@
 package com.mediscreen.central.service;
 
 import com.mediscreen.central.model.Patient;
+import com.mediscreen.central.service.util.CalculateAgeFromDob;
 import com.mediscreen.central.service.util.FamilyTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -21,7 +18,8 @@ public class DiseaseRiskService {
     @Autowired
     CalculateTriggerService calculateTriggerService;
 
-    private final List<String> familyType = FamilyTypes.familyTypeList;
+    @Autowired
+    CalculateAgeFromDob calculateAgeFromDob;
 
     /**
      *
@@ -32,12 +30,13 @@ public class DiseaseRiskService {
         String risk = null;
         String choice = null;
         int numberOfTriggers = calculateTriggerService.getTriggerCount(patient.getId());
-        Boolean moreThan30AndHaveTriggers = calculateIfMore30Years(patient.getDob());
+        int patientAge = calculateAgeFromDob.calculateAge(patient.getDob());
         logger.info("in getDiseaseRisk, number of triggers: "+numberOfTriggers);
+        logger.info("patientAge is: "+ patientAge);
 
         if (numberOfTriggers > 8){
             choice = "EOS";
-        } else if (moreThan30AndHaveTriggers && numberOfTriggers>1){
+        } else if (patientAge > 30 && numberOfTriggers>1){
 
             choice = getChoiceForOlderThan30(numberOfTriggers);
         } else {
@@ -63,7 +62,7 @@ public class DiseaseRiskService {
                 risk = FamilyTypes.NONE;
                 break;
         }
-        logger.info("in DiseaseRiskService");
+        logger.info("end of DiseaseRiskService");
         return risk;
     }
 
@@ -105,20 +104,5 @@ public class DiseaseRiskService {
                 break;
         }
         return choice;
-    }
-
-    /**
-     * 1 years = 31556926
-     * if currentDate - 30years is < than dob (birthdate) : Patient is younger than 30 Years
-     * @param dob
-     * @return
-     */
-    public Boolean calculateIfMore30Years (Date dob){
-        boolean patientIsOlderThan30;
-        Date currentDate = new Date(System.currentTimeMillis());
-        LocalDate currentDate2 = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate dob2 = dob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        patientIsOlderThan30 = !currentDate2.minusYears(30).isBefore(dob2);
-        return patientIsOlderThan30;
     }
 }

@@ -2,7 +2,6 @@ package com.mediscreen.central.proxy;
 
 import com.mediscreen.central.model.PatientHist;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +13,7 @@ import java.util.List;
 public interface PatientHistClientProxy {
 
     @PostMapping("/add")
-    PatientHist addPatientHistory (@RequestBody PatientHist patient);
+    PatientHist addPatientHistory (@RequestBody PatientHist patientHist);
 
     @GetMapping ("/getById")
     PatientHist getPatientHistById (@RequestParam String id);
@@ -26,10 +25,10 @@ public interface PatientHistClientProxy {
     List<PatientHist> getAllPatientsHist();
 
     @PostMapping ("/updatePatientHistory")
-    PatientHist updatePatientHistory(@RequestParam PatientHist patient);
+    PatientHist updatePatientHistory(@RequestBody PatientHist patientHist);
 
 
-    @DeleteMapping("/deleteById")
+    @GetMapping("/deleteById")
     void deletePatHistoryById (@RequestParam String id);
 
 

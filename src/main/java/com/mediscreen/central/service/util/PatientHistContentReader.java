@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Component
 public class PatientHistContentReader {
@@ -16,12 +17,16 @@ public class PatientHistContentReader {
 
     public List<String> ToStringListConvertor (String patHistoryContent){
         List<String> contentToList = new ArrayList<>();
-        // replace all "," by " "
 
-        String formatContent = patHistoryContent.replace(",","");
+        String formatContentWithoutComma = patHistoryContent.replace(",","");
+        String formatContentWithoutDot = formatContentWithoutComma.replace(".", "");
+        String formatContentToLowerCase = formatContentWithoutDot.toLowerCase(Locale.ROOT);
+
         // all words to an array
-        String[] split = StringUtils.split(formatContent);
+        String[] split = StringUtils.split(formatContentToLowerCase);
         contentToList = List.of(split);
+
+
         // assert every word triggered in content
        // contentToList.forEach(w -> logger.info("in PatientHistContentReader "+ w));
 

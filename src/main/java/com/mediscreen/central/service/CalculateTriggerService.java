@@ -33,7 +33,7 @@ public class CalculateTriggerService {
 
             contentWords.forEach(cw -> {
                    triggerCountLs.addAll(triggers.stream().filter(t-> t.equals(cw)).collect(Collectors.toList()));
-                   logger.info("in getTriggerCount "+ cw);
+
             });
         });
         logger.info("in getTriggerCount "+ triggerCountLs.size());
