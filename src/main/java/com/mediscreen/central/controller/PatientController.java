@@ -43,14 +43,14 @@ public class PatientController {
         if (null != error) {
             model.addAttribute("error", error);
         }
-        return "patientTemplate/patientList";
+        return "/patientTemplates/patientList";
     }
 
     @GetMapping ("/getPatientByFamily")
     public String getPatientByFamily (Model model, @RequestParam String family){
         List<Patient> patientls = patientClientProxy.getPatientByFamily(family);
         model.addAttribute("patientList",patientls);
-        return "patientTemplate/patientList";
+        return "patientTemplates/patientList";
     }
 
     /**
@@ -62,7 +62,7 @@ public class PatientController {
     public String addPatientView (Model model, @RequestParam(value ="error", required = false) String error){
         model.addAttribute("patient",new Patient());
         model.addAttribute("error", error);
-        return "patientTemplate/addPatient";
+        return "patientTemplates/addPatient";
     }
 
     /**
@@ -76,7 +76,7 @@ public class PatientController {
             patientClientProxy.addPatient(patient);
         } catch (PatientAlreadyExistException e){
             e.getMessage();
-            return "patientTemplate/addPatient";
+            return "patientTemplates/addPatient";
         }
 
         return "redirect:/central/getPatientList";
@@ -85,7 +85,7 @@ public class PatientController {
     @GetMapping ("/updatePatient/{id}")
     public String updateAPatient (Model model, @PathVariable (value = "id") Long id) {
         model.addAttribute("patient", patientClientProxy.getPatientById(id));
-        return "patientTemplate/updatePatient";
+        return "patientTemplates/updatePatient";
     }
 
     @PostMapping ("/validateUpdate/{id}")

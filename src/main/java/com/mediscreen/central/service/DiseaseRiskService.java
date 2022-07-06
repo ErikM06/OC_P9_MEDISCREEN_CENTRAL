@@ -68,6 +68,7 @@ public class DiseaseRiskService {
 
     private String getChoiceForOlderThan30(int numberOfTriggers) {
         String choice;
+
         switch (numberOfTriggers){
             case 2: choice = "B";
                 break;

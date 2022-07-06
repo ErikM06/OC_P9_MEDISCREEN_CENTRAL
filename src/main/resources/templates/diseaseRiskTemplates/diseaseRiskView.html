@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Diabetes risk view</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col text-centered">
+            <h2>Diabetes Risk</h2>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <table class="table table-bordered centered">
+        <thead>
+        <tr style="text-align:center">
+            <th>firstname</th>
+            <th>lastname</th>
+            <th>age</th>
+            <th>sex</th>
+            <th>phone</th>
+            <th>diabetes risk</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:object="${patient}" style="text-align:center">
+            <td><span th:text="${patient.firstname}"></span></td>
+            <td><span th:text="${patient.lastname}"></span></td>
+            <td><span th:text="${age}"></span></td>
+            <td><span th:text="${patient.sex}"></span></td>
+            <td><span th:text="${patient.phone}"></span></td>
+            <td><span th:text="${patient.family}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" th:href="@{/central/getPatientList}" role="button"> return to Patient list </a>
+</div>
+
+</body>
+</html>

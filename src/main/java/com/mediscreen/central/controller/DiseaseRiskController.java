@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -65,4 +67,25 @@ public class DiseaseRiskController {
 
         return new ResponseEntity<>(patientAssessmentDTOLs, HttpStatus.OK);
     }
+
+    @GetMapping("/CalculateDiseaseRiskById/{patId}")
+    public String calculateDiseaseRickByIdView (Model model, @PathVariable (value = "patId") Long id){
+        Patient patient = new Patient();
+        int age = 0;
+        try {
+            patient = patientClientProxy.getPatientById(id);
+            patient.setFamily(diseaseRiskService.getDiseaseRisk(patient));
+            age = calculateAgeFromDob.calculateAge(patient.getDob());
+            patientClientProxy.updatePatient(patient);
+        } catch (Exception e){
+            return "/central/getPatientHistList/{patId}";
+        }
+        model.addAttribute("patient",patient);
+        model.addAttribute("age", age);
+
+        return "diseaseRiskTemplates/diseaseRiskView";
+    }
+
+
+
 }

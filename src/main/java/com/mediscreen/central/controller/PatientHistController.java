@@ -52,7 +52,7 @@ public class PatientHistController {
         if (null != error) {
             model.addAttribute("error", error);
         }
-        return "patientHistTemplate/patientHistList";
+        return "patientHistTemplates/patientHistList";
     }
 
 
@@ -66,7 +66,7 @@ public class PatientHistController {
         Patient patient = patientClientProxy.getPatientById(id);
         PatientHist patientHist = new PatientHist(ObjectId.get().toString(), id, patient.getFamily());
         model.addAttribute("patientHist", patientHist);
-        return "patientHistTemplate/addPatientHist";
+        return "patientHistTemplates/addPatientHist";
     }
 
     /**
@@ -86,7 +86,7 @@ public class PatientHistController {
     public String updateAPatient (Model model, @PathVariable(value = "id") String id) {
         model.addAttribute("patientHist", patientHistClientProxy.getPatientHistById(id));
         model.addAttribute("familyList", familyTypesLs);
-        return "patientHistTemplate/updatePatientHist";
+        return "patientHistTemplates/updatePatientHist";
     }
 
     @PostMapping ("/validatePatientHistUpdate/{id}")

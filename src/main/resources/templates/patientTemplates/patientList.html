@@ -24,30 +24,31 @@
     <table class="table table-bordered centered">
         <thead>
         <tr style="text-align:center">
-            <th>id</th>
-            <th>family</th>
-            <th>given</th>
+            <th>firstname</th>
+            <th>lastname</th>
             <th>dob</th>
             <th>sex</th>
             <th>address</th>
             <th>phone</th>
-            <th>name</th>
+            <th>given</th>
+            <th>family</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="patient:${patientList}" style="text-align:center">
-            <td><span th:text="${patient.id}"></span></td>
-            <td><span th:text="${patient.family}"></span></td>
-            <td><span th:text="${patient.given}"></span></td>
+            <td><span th:text="${patient.firstname}"></span>
+            <td><span th:text="${patient.lastname}"></span></td>
             <td><span th:text="${patient.dob}"></span></td>
             <td><span th:text="${patient.sex}"></span></td>
             <td><span th:text="${patient.address}"></span></td>
             <td><span th:text="${patient.phone}"></span></td>
-            <td><span th:text="${patient.getFirstname}"></span>
+            <td><span th:text="${patient.given}"></span></td>
+            <td><span th:text="${patient.family}"></span></td>
             <td>
                 <a class="btn btn-primary" th:href="@{/central/updatePatient/{id}(id=${patient.id})}" role="button"> Edit Patient info </a>
                 <a class="btn btn-primary" th:href="@{/central/getPatientHistList/{id}(id=${patient.id})}" role="button"> Go to Patient Obs </a>
                 <a class="btn btn-primary" th:href="@{/central/deletePatientById/{id}(id=${patient.id})}" role="button"> Delete</a>
+                <a class="btn btn-primary" th:href="@{/assess/CalculateDiseaseRiskById/{patId}(patId=${patient.id})}" role="button"> Calculate Diabetes Risk</a>
             </td>
 
         </tr>
