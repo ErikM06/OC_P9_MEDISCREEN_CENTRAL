@@ -1,6 +1,6 @@
 package com.mediscreen.central.configuration;
 
-import com.mediscreen.central.service.util.CustomErrorDecoder;
+import com.mediscreen.central.customExceptions.CustomErrorDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

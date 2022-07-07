@@ -18,7 +18,7 @@
 </div>
 <div class="row">
     <div class="left-align">
-        <a class="btn btn-primary" th:href="@{/central/addPatientHist}" role="button"> Add</a>
+
     </div>
 </div>
 <div class="row">
@@ -27,7 +27,6 @@
         <tr style="text-align:center">
             <th>id</th>
             <th>patient Id</th>
-            <th>family</th>
             <th>content</th>
         </tr>
         </thead>
@@ -35,7 +34,6 @@
         <tr th:each="patientHist:${patHistList}" style="text-align:center">
             <td><span th:text="${patientHist.id}"></span></td>
             <td><span th:text="${patientHist.patId}"></span></td>
-            <td><span th:text="${patientHist.family}"></span></td>
             <td>
                 <div class="card">
                     <div class="card-body" th:text="${patientHist.content}">
@@ -45,6 +43,7 @@
             <td>
                 <a class="btn btn-primary" th:href="@{/central/updatePatientHist/{id}(id=${patientHist.id})}" role="button"> Edit</a>
                 <a class="btn btn-primary" th:href="@{/central/deletePatientHistById/{patId}(patId=${patientHist.patId})'&'{id}(id=${patientHist.id})}" role="button"> Delete</a>
+                <a class="btn btn-primary" th:href="@{/central/addPatientHist/{patId}(patId=${patientHist.patId})}" role="button"> Add</a>
             </td>
 
         </tr>

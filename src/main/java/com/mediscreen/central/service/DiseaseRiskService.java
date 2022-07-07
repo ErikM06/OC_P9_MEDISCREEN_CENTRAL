@@ -32,21 +32,13 @@ public class DiseaseRiskService {
      */
     public String getDiseaseRisk(Patient patient) {
         String risk = null;
-        String choice = null;
+        String choice;
         int numberOfTriggers = calculateTriggerService.getTriggerCount(patient.getId());
         int patientAge = calculateAgeFromDob.calculateAge(patient.getDob());
         logger.info("in getDiseaseRisk, number of triggers: " + numberOfTriggers);
         logger.info("patientAge is: " + patientAge);
 
-
-        switch (patient.getSex()) { // switch the method for Male or Female
-            case "F":
-                choice = getChoiceForFemale(patientAge, numberOfTriggers);
-                break;
-            case "M":
-                choice = getChoiceForMale(patientAge, numberOfTriggers);
-                break;
-        }
+        choice = patient.getSex().equals("F") ? getChoiceForFemale(patientAge, numberOfTriggers) : getChoiceForMale(patientAge, numberOfTriggers);
 
         switch (Objects.requireNonNull(choice)) { // the end switch which will receive a String indicating the risk
             case "B":
@@ -74,10 +66,11 @@ public class DiseaseRiskService {
      */
     private String getChoiceForMale(int patientAge, int numberOfTriggers) {
         String riskLevel = null;
-        int choiceByAge = 1;
+        int choiceByAge = (patientAge>=30) ? 2 : 1;
+        /*int choiceByAge = 1;
         if (patientAge >= 30) {
             choiceByAge = 2;
-        }
+        } */
         // 2 case and multiples if statement as risk change with age and number and triggers
         switch (choiceByAge) { // if patient < 30 -> case 1 || if patient >= 30 -> case 2
             case 1:
@@ -111,10 +104,7 @@ public class DiseaseRiskService {
 
     private String getChoiceForFemale(int patientAge, int numberOfTriggers) {
         String riskLevel = null;
-        int choiceByAgeF = 1;
-        if (patientAge >= 30) {
-            choiceByAgeF = 2;
-        }
+        int choiceByAgeF = (patientAge>=30) ? 2 : 1;
 
         // 2 case and multiples if statement as risk change with age and number and triggers
         switch (choiceByAgeF) { // if patient < 30 -> case 1 || if patient >= 30 -> case 2

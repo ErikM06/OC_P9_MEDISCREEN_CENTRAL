@@ -24,7 +24,7 @@ public interface PatientHistClientProxy {
     @GetMapping ("/getAllPatientHistory")
     List<PatientHist> getAllPatientsHist();
 
-    @PostMapping ("/updatePatientHistory")
+    @PostMapping ("/update-patient-history")
     PatientHist updatePatientHistory(@RequestBody PatientHist patientHist);
 
 

@@ -3,7 +3,7 @@ logging:
   level:
     com.mediscreen.central: DEBUG
 server:
-  port: 8080
+  port: 8090
 spring:
   application:
     name: mediscreen-client

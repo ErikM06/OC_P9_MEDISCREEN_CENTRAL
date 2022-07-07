@@ -59,9 +59,8 @@ public class PatientController {
      * @return UI for 'addPatient'
      */
     @GetMapping("/addPatient")
-    public String addPatientView (Model model, @RequestParam(value ="error", required = false) String error){
+    public String addPatientView (Model model){
         model.addAttribute("patient",new Patient());
-        model.addAttribute("error", error);
         return "patientTemplates/addPatient";
     }
 
@@ -71,11 +70,11 @@ public class PatientController {
      * @return a redirect to the patient list if success OR addPatientHist.html if fails
      */
     @PostMapping("/validatePatient")
-    public String addAPatient (@ModelAttribute (value = "patient") Patient patient){
+    public String addAPatient (@ModelAttribute (value = "patient") Patient patient, Model model){
         try {
             patientClientProxy.addPatient(patient);
         } catch (PatientAlreadyExistException e){
-            e.getMessage();
+            model.addAttribute("error", e.getMessage());
             return "patientTemplates/addPatient";
         }
 
