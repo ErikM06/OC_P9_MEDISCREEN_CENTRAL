@@ -20,7 +20,7 @@
         <h2>Add a new Patient</h2>
     </div>
     <div class="row">
-        <form th:action="@{/central/validatePatient}" th:object="${patient}" method="post" class="form-horizontal" style="width: 100%">
+        <form th:action="@{/central/validate-patient}" th:object="${patient}" method="post" class="form-horizontal" style="width: 100%">
 
             <input th:field="${patient.family}" id="family" name="family" placeholder="family">
             <p th:if="${#fields.hasErrors('family')}" th:errorclass="error" th:errors="*{family}"></p>

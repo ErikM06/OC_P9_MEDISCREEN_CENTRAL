@@ -5,12 +5,10 @@ import com.mediscreen.central.model.Patient;
 import com.mediscreen.central.model.PatientHist;
 import com.mediscreen.central.proxy.PatientClientProxy;
 import com.mediscreen.central.proxy.PatientHistClientProxy;
-import com.mediscreen.central.service.util.DateParser;
 import com.mediscreen.central.service.util.FamilyTypes;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +32,6 @@ public class PatientHistController {
 
     private final List<String> familyTypesLs = FamilyTypes.familyTypeList;
 
-    @Autowired
-    DateParser parser;
 
     public PatientHistController(PatientHistClientProxy patientHistClientProxy, PatientClientProxy patientClientProxy) {
         this.patientHistClientProxy = patientHistClientProxy;

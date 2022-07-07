@@ -4,11 +4,8 @@ import com.mediscreen.central.customExceptions.NotFoundException;
 import com.mediscreen.central.customExceptions.PatientAlreadyExistException;
 import com.mediscreen.central.model.Patient;
 import com.mediscreen.central.proxy.PatientClientProxy;
-import com.mediscreen.central.proxy.PatientHistClientProxy;
-import com.mediscreen.central.service.util.DateParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,15 +24,14 @@ public class PatientController {
     Logger logger = LoggerFactory.getLogger(PatientController.class);
     private final PatientClientProxy patientClientProxy;
 
-    private final PatientHistClientProxy patientHistClientProxy;
 
-    public PatientController (PatientClientProxy patientClientProxy, PatientHistClientProxy patientHistClientProxy){
+
+    public PatientController (PatientClientProxy patientClientProxy){
         this.patientClientProxy=patientClientProxy;
-        this.patientHistClientProxy = patientHistClientProxy;
+
     }
 
-    @Autowired
-    DateParser parser;
+
     @GetMapping ("/getPatientList")
     public String getPatient(Model model, @RequestParam(value = "error", required = false) String error) {
 
