@@ -32,7 +32,7 @@ public class PatientController {
     }
 
 
-    @GetMapping ("/getPatientList")
+    @GetMapping ("/get-patient-list")
     public String getPatient(Model model, @RequestParam(value = "error", required = false) String error) {
 
         model.addAttribute("patientList",  patientClientProxy.getPatientList());
@@ -42,7 +42,7 @@ public class PatientController {
         return "/patientTemplates/patientList";
     }
 
-    @GetMapping ("/getPatientByFamily")
+    @GetMapping ("/get-patient-by-family")
     public String getPatientByFamily (Model model, @RequestParam String family){
         List<Patient> patientls = patientClientProxy.getPatientByFamily(family);
         model.addAttribute("patientList",patientls);
@@ -54,7 +54,7 @@ public class PatientController {
      * @param model
      * @return UI for 'addPatient'
      */
-    @GetMapping("/addPatient")
+    @GetMapping("/add-patient")
     public String addPatientView (Model model){
         model.addAttribute("patient",new Patient());
         return "patientTemplates/addPatient";
@@ -65,7 +65,7 @@ public class PatientController {
      * @param patient
      * @return a redirect to the patient list if success OR addPatientHist.html if fails
      */
-    @PostMapping("/validatePatient")
+    @PostMapping("/validate-patient")
     public String addAPatient (@ModelAttribute (value = "patient") Patient patient, Model model){
         try {
             patientClientProxy.addPatient(patient);
@@ -74,31 +74,31 @@ public class PatientController {
             return "patientTemplates/addPatient";
         }
 
-        return "redirect:/central/getPatientList";
+        return "redirect:/central/get-patient-list";
     }
 
-    @GetMapping ("/updatePatient/{id}")
+    @GetMapping ("/update-patient/{id}")
     public String updateAPatient (Model model, @PathVariable (value = "id") Long id) {
         model.addAttribute("patient", patientClientProxy.getPatientById(id));
         return "patientTemplates/updatePatient";
     }
 
-    @PostMapping ("/validateUpdate/{id}")
+    @PostMapping ("/validate-update/{id}")
     public String validatePatientUpdate (@ModelAttribute (value = "patient") Patient patient, @PathVariable (value ="id") Long id) {
         logger.info("in /validateUpdate");
         patientClientProxy.updatePatient(patient);
-        return "redirect:/central/getPatientList";
+        return "redirect:/central/get-patient-list";
     }
 
-    @GetMapping("/deletePatientById/{id}")
+    @GetMapping("/delete-patient-by-id/{id}")
     public String deletePatientById (@PathVariable (value = "id") Long id) throws NotFoundException {
         logger.info("in /deletePatientById");
         try {
             patientClientProxy.deletePatient(id);
         } catch (NotFoundException e){
-            return "redirect:/central/getPatientList";
+            return "redirect:/central/get-patient-list";
         }
-        return "redirect:/central/getPatientList";
+        return "redirect:/central/get-patient-list";
     }
 
 

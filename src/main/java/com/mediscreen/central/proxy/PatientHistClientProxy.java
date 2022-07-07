@@ -9,26 +9,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient (value = "mediscreen-hist", url ="http://localhost:8082/patHistory/")
+@FeignClient (value = "mediscreen-hist", url ="http://localhost:8082/pat-history/")
 public interface PatientHistClientProxy {
 
     @PostMapping("/add")
     PatientHist addPatientHistory (@RequestBody PatientHist patientHist);
 
-    @GetMapping ("/getById")
+    @GetMapping ("/get-by-id")
     PatientHist getPatientHistById (@RequestParam String id);
 
-    @GetMapping ("/getByPatId")
+    @GetMapping ("/get-by-pat-id")
     List<PatientHist> getPatientHistByPatId (@RequestParam Long id);
 
-    @GetMapping ("/getAllPatientHistory")
+    @GetMapping ("/get-all-patient-history")
     List<PatientHist> getAllPatientsHist();
 
     @PostMapping ("/update-patient-history")
     PatientHist updatePatientHistory(@RequestBody PatientHist patientHist);
 
 
-    @GetMapping("/deleteById")
+    @GetMapping("/delete-by-id")
     void deletePatHistoryById (@RequestParam String id);
 
 

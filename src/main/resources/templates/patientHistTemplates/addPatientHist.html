@@ -21,7 +21,7 @@
     </div>
 
     <div class="row">
-        <form th:action="@{/central/validatePatientHist/{id}(id=${patientHist.id})}" th:object="${patientHist}" id="validatePatientHistForm" method="post" class="form-horizontal" style="width: 100%">
+        <form th:action="@{/central/validate-patient-hist/{id}(id=${patientHist.id})}" th:object="${patientHist}" id="validatePatientHistForm" method="post" class="form-horizontal" style="width: 100%">
             <a> Patient id</a>
             <div>
                 <label>
@@ -42,7 +42,7 @@
             </div>
 
             <button name="Save" class="btn btn-primary" type="submit" >Save</button>
-            <a name="Cancel" class="btn btn-primary" th:href="@{/central/getPatientLs}">Cancel</a>
+            <a name="Cancel" class="btn btn-primary" th:href="@{/central/get-patient-ls}">Cancel</a>
 
         </form>
     </div>

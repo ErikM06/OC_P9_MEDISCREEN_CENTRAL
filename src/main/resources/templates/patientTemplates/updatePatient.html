@@ -20,7 +20,7 @@
             <h2>update a Patient <span th:text="${id}"></span></h2>
         </div>
         <div class="row">
-            <form th:action="@{/central/validateUpdate/{id}(id=${patient.id})}" th:object="${patient}" th:method="post" class="form-horizontal" style="width: 100%">
+            <form th:action="@{/central/validate-update/{id}(id=${patient.id})}" th:object="${patient}" th:method="post" class="form-horizontal" style="width: 100%">
                 <input th:field="${patient.family}" id="family" name="family" placeholder="family">
                 <p th:if="${#fields.hasErrors('family')}" th:errorclass="error" th:errors="*{patient.family}"></p>
                 <input th:field="${patient.given}" id="given" name="given" placeholder="given">
@@ -35,7 +35,7 @@
                 <p th:if="${#fields.hasErrors('phone')}" th:errorclass="error" th:errors="*{patient.phone}"></p>
 
                 <button name="Save" class="btn btn-primary" type="submit" >Save</button>
-                <a name="Cancel" class="btn btn-primary" th:href="@{/central/getPatientLs}" >Cancel</a>
+                <a name="Cancel" class="btn btn-primary" th:href="@{/central/get-patient-ls}" >Cancel</a>
 
             </form>
         </div>

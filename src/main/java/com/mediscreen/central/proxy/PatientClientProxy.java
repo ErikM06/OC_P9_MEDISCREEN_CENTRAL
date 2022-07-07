@@ -14,22 +14,22 @@ import java.util.List;
 @FeignClient (name = "mediscreen-patient", url = "http://localhost:8081/patient/")
 public interface PatientClientProxy {
 
-    @GetMapping (value = "/getById")
+    @GetMapping (value = "/get-by-id")
     Patient getPatientById (@RequestParam Long id);
 
-    @GetMapping(value = "/getPatientList", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get-patient-list", consumes = MediaType.APPLICATION_JSON_VALUE)
     List<Patient> getPatientList ();
 
     @PostMapping(value = "/add")
     Patient addPatient (@RequestBody Patient patient);
 
-    @GetMapping ("/getPatientByFamily")
+    @GetMapping ("/get-patient-by-family")
     List<Patient> getPatientByFamily (@RequestParam String family);
 
     @PostMapping ("/update")
     Patient updatePatient (@RequestBody Patient patient);
 
-    @DeleteMapping("/deleteById")
+    @DeleteMapping("/delete-by-id")
     void deletePatient (@RequestParam Long id);
 
 }

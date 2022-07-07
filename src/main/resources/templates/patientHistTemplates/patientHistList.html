@@ -24,6 +24,7 @@
 <div class="row">
     <table class="table table-bordered centered">
         <thead>
+
         <tr style="text-align:center">
             <th>id</th>
             <th>patient Id</th>
@@ -41,12 +42,14 @@
                 </div>
             </td>
             <td>
-                <a class="btn btn-primary" th:href="@{/central/updatePatientHist/{id}(id=${patientHist.id})}" role="button"> Edit</a>
-                <a class="btn btn-primary" th:href="@{/central/deletePatientHistById/{patId}(patId=${patientHist.patId})'&'{id}(id=${patientHist.id})}" role="button"> Delete</a>
-                <a class="btn btn-primary" th:href="@{/central/addPatientHist/{patId}(patId=${patientHist.patId})}" role="button"> Add</a>
+                <a class="btn btn-primary" th:href="@{/central/update-patient-hist/{id}(id=${patientHist.id})}" role="button"> Edit</a>
+                <a class="btn btn-primary" th:href="@{/central/delete-patient-hist-by-id/{patId}(patId=${patientHist.patId})'&'{id}(id=${patientHist.id})}" role="button"> Delete</a>
             </td>
-
+            <div>
+                <a class="btn btn-primary" th:href="@{/central/add-patient-hist/{patId}(patId=${patientHist.patId})}" role="button"> Add</a>
+            </div>
         </tr>
+
         </tbody>
     </table>
 </div>

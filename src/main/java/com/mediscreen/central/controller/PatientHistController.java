@@ -38,12 +38,12 @@ public class PatientHistController {
         this.patientClientProxy = patientClientProxy;
     }
 
-    @GetMapping("/getPatientHistList/{patId}")
+    @GetMapping("/get-patient-hist-list/{patId}")
     public String getPatient(Model model,@PathVariable (value = "patId") Long id, @RequestParam(value = "error", required = false) String error) {
         try {
             model.addAttribute("patHistList", patientHistClientProxy.getPatientHistByPatId(id));
         } catch (NotFoundException e){
-            return "redirect:/central/addPatientHist/{patId}";
+            return "redirect:/central/add-patient-hist/{patId}";
         }
         if (null != error) {
             model.addAttribute("error", error);
@@ -57,7 +57,7 @@ public class PatientHistController {
      * @param model
      * @return UI for 'addPatient'
      */
-    @GetMapping("/addPatientHist/{patId}")
+    @GetMapping("/add-patient-hist/{patId}")
     public String addPatientView (Model model, @PathVariable (value = "patId") Long id){
         Patient patient = patientClientProxy.getPatientById(id);
         PatientHist patientHist = new PatientHist(ObjectId.get().toString(), id, patient.getFamily());
@@ -70,29 +70,29 @@ public class PatientHistController {
      * @param patientHist
      * @return a redirect to the patient list if success OR addPatientHist.html if fails
      */
-    @PostMapping("/validatePatientHist/{id}")
+    @PostMapping("/validate-patient-hist/{id}")
     public String addAPatient (@ModelAttribute(value = "patientHist") PatientHist patientHist, @PathVariable (value = "id") String id){
 
         patientHistClientProxy.addPatientHistory(patientHist);
 
-        return "redirect:/central/getPatientHistList/"+patientHist.getPatId();
+        return "redirect:/central/get-patient-hist-list/"+patientHist.getPatId();
     }
 
-    @GetMapping ("/updatePatientHist/{id}")
+    @GetMapping ("/update-patient-hist/{id}")
     public String updateAPatient (Model model, @PathVariable(value = "id") String id) {
         model.addAttribute("patientHist", patientHistClientProxy.getPatientHistById(id));
         model.addAttribute("familyList", familyTypesLs);
         return "patientHistTemplates/updatePatientHist";
     }
 
-    @PostMapping ("/validatePatientHistUpdate/{id}")
+    @PostMapping ("/validate-patient-hist-update/{id}")
     public String validatePatientUpdate (@ModelAttribute (value = "patientHist") PatientHist patientHist, @PathVariable (value ="id") String id) {
         logger.info("in /validatePatientHistUpdate");
         patientHistClientProxy.updatePatientHistory(patientHist);
-        return "redirect:/central/getPatientList";
+        return "redirect:/central/get-patient-list";
     }
 
-    @GetMapping("/deletePatientHistById/{id}")
+    @GetMapping("/delete-patient-hist-by-id/{id}")
     public String deletePatientById ( @PathVariable (value = "id") String id){
         logger.info("in /deletePatientHistById");
         Long patId = null;
@@ -101,9 +101,9 @@ public class PatientHistController {
             patientHistClientProxy.deletePatHistoryById(id);
         } catch (NotFoundException e){
 
-            return "redirect:/central/getPatientHistList/"+patId;
+            return "redirect:/central/get-patient-hist-list/"+patId;
         }
-        return "redirect:/central/getPatientHistList/"+patId;
+        return "redirect:/central/get-patient-hist-list/"+patId;
     }
 
 
