@@ -3,7 +3,6 @@ package com.mediscreen.central.proxy;
 
 import com.mediscreen.central.dto.PatientAssessmentDTO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,8 +12,8 @@ import java.util.List;
 public interface PatientDiabetesRiskProxy {
 
     @GetMapping("/id")
-    ResponseEntity<PatientAssessmentDTO> getAssessById (Long id);
+    PatientAssessmentDTO getAssessById (@RequestParam Long id);
 
     @GetMapping("/familyName")
-    ResponseEntity<List<PatientAssessmentDTO>> getAssessByFamilyName (@RequestParam String familyName);
+    List<PatientAssessmentDTO> getAssessByFamilyName (@RequestParam String familyName);
 }

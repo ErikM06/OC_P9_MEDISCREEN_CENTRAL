@@ -14,6 +14,14 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <div th:if="${error}">
+        <div class="alert alert-danger alert-dismissible fade show">
+            <strong>Error!</strong> <span th:text="${error}"> </span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <table class="table table-bordered centered">
@@ -35,7 +43,7 @@
             <td><span th:text="${age}"></span></td>
             <td><span th:text="${patient.sex}"></span></td>
             <td><span th:text="${patient.phone}"></span></td>
-            <td><span th:text="${patient.family}"></span></td>
+            <td><span th:text="${patient.assessment}"></span></td>
         </tr>
         </tbody>
     </table>

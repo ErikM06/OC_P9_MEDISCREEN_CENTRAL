@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping ("/central")
-public class DiseaseRiskController {
+public class DiabetesRiskController {
 
-    Logger logger = LoggerFactory.getLogger(DiseaseRiskController.class);
+    Logger logger = LoggerFactory.getLogger(DiabetesRiskController.class);
 
     @Autowired
     PatientClientProxy patientClientProxy;
@@ -32,19 +32,22 @@ public class DiseaseRiskController {
 
     @GetMapping("/calculate-disease-risk-by-id/{patId}")
     public String calculateDiseaseRickByIdView (Model model, @PathVariable (value = "patId") Long id){
-        Patient patient;
-        int age = 0;
+        Patient patient = new Patient();
+        int age;
         try {
             patient = patientClientProxy.getPatientById(id);
-            PatientAssessmentDTO patientAssessmentDTO = diabetesRiskProxy.getAssessById(id).getBody();
-            patient.setFamily(patientAssessmentDTO.getDiabetesAssessment());
-            age = calculateAgeFromDob.calculateAge(patient.getDob());
-            patientClientProxy.updatePatient(patient);
+
+            PatientAssessmentDTO patientAssessmentDTO = diabetesRiskProxy.getAssessById(id);
+            patient.setAssessment(patientAssessmentDTO.getAssessment());
+            age = patientAssessmentDTO.getAge();
+
         } catch (Exception e){
-            return "/central/getPatientHistList/{patId}";
+            model.addAttribute("error", e.getMessage());
+            return "diseaseRiskTemplates/diseaseRiskView";
         }
         model.addAttribute("patient",patient);
         model.addAttribute("age", age);
+        patientClientProxy.updatePatient(patient);
 
         return "diseaseRiskTemplates/diseaseRiskView";
     }

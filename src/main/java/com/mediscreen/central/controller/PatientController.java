@@ -63,7 +63,7 @@ public class PatientController {
     /**
      *
      * @param patient
-     * @return a redirect to the patient list if success OR addPatientHist.html if fails
+     * @return a redirect to the patient list if success OR addPatientNotes.html if fails
      */
     @PostMapping("/validate-patient")
     public String addAPatient (@ModelAttribute (value = "patient") Patient patient, Model model){

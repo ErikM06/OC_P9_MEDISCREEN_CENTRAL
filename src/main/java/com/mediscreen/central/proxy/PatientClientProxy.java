@@ -2,7 +2,6 @@ package com.mediscreen.central.proxy;
 
 import com.mediscreen.central.model.Patient;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +16,7 @@ public interface PatientClientProxy {
     @GetMapping (value = "/get-by-id")
     Patient getPatientById (@RequestParam Long id);
 
-    @GetMapping(value = "/get-patient-list", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get-patient-list")
     List<Patient> getPatientList ();
 
     @PostMapping(value = "/add")

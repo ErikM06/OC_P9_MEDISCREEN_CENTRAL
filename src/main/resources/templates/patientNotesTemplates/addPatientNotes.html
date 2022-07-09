@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org" lang="eng">
 <head>
     <meta charset="utf-8"/>
-    <title>update a Patient</title>
+    <title>Add a Patient Hist</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
 <body>
@@ -17,25 +17,32 @@
 </div>
 <div class="container">
     <div class="row">
-        <h2>update a Patient</h2>
+        <h2>Add a new Patient notes</h2>
     </div>
+
     <div class="row">
-        <form th:action="@{/central/validate-patient-hist-update/{id}(id=${patientHist.id})}" th:object="${patientHist}" id="validatePatientHistForm" th:method="post" class="form-horizontal" style="width: 100%">
+        <form th:action="@{/central/validate-patient-notes/{patId}(patId=${patientNotes.patId})}" th:object="${patientNotes}" id="validatePatientNotesForm" method="post" class="form-horizontal" style="width: 100%">
+            <a> Patient id</a>
             <div>
-                <span  th:text="${patientHist.patId}"></span>
+                <label>
+                    <a  th:text="*{patId}" th:value="*{patId}" ></a>
+                </label>
             </div>
-                <input th:field="*{patId}" type="hidden">
+            <a> FamilyName</a>
             <div>
-                <span  th:text="${patientHist.family}"></span>
+                <label>
+                    <a  th:text="*{family}" th:value="*{family}" ></a>
+                </label>
             </div>
             <a> Content</a>
             <div class="mb-3">
                 <label>
-                    <textarea  name="content" th:field="*{content}"  rows="5" cols="50" form="validatePatientHistForm"></textarea>
+                    <textarea  name="content" th:field="*{content}"  rows="5" cols="50" form="validatePatientNotesForm"></textarea>
                 </label>
             </div>
+
             <button name="Save" class="btn btn-primary" type="submit" >Save</button>
-            <a name="Cancel" class="btn btn-primary" th:href="@{/central/get-patient-ls}" >Cancel</a>
+            <a name="Cancel" class="btn btn-primary" th:href="@{/central/get-patient-ls}">Cancel</a>
 
         </form>
     </div>

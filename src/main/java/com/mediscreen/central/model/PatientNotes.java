@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-public class PatientHist {
+public class PatientNotes {
 
 
     private String id;
@@ -25,23 +25,23 @@ public class PatientHist {
 
 
 
-    public PatientHist() {
+    public PatientNotes() {
     }
 
-    public PatientHist(String family, String content) {
+    public PatientNotes(String family, String content) {
         this.content = content;
         this.family=family;
 
     }
 
-    public PatientHist(String id, long patId, String content, String family) {
+    public PatientNotes(String id, long patId, String content, String family) {
         this.id = id;
         this.patId = patId;
         this.content = content;
         this.family = family;
     }
 
-    public PatientHist(String id, long patId, String family) {
+    public PatientNotes(String id, long patId, String family) {
         this.id = id;
         this.patId = patId;
         this.family = family;

@@ -22,10 +22,10 @@
     <div class="row">
         <form th:action="@{/central/validate-patient}" th:object="${patient}" method="post" class="form-horizontal" style="width: 100%">
 
-            <input th:field="${patient.family}" id="family" name="family" placeholder="family">
-            <p th:if="${#fields.hasErrors('family')}" th:errorclass="error" th:errors="*{family}"></p>
-            <input th:field="${patient.given}" id="given" name="given" placeholder="given">
-            <p th:if="${#fields.hasErrors('given')}" th:errorclass="error" th:errors="*{given}"></p>
+            <input th:field="${patient.lastname}" id="lastname" name="lastname" placeholder="lastname">
+            <p th:if="${#fields.hasErrors('lastname')}" th:errorclass="error" th:errors="*{lastname}"></p>
+            <input th:field="${patient.firstname}" id="firstname" name="firstname" placeholder="firstname">
+            <p th:if="${#fields.hasErrors('firstname')}" th:errorclass="error" th:errors="*{firstname}"></p>
             <input type="date" th:field="${patient.dob}" th:errorclass="fieldError"   id="dob" name="dob" placeholder="dob">
             <p th:if="${#fields.hasErrors('dob')}" th:errorclass="error" th:errors="*{dob}"></p>
             <input th:field="${patient.sex}" th:errorclass="fieldError"   id="sex" name="sex" placeholder="sex">

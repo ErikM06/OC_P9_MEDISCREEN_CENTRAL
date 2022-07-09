@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>PatientHist list</title>
+    <title>Patient notes list</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
 </head>
@@ -12,7 +12,7 @@
 <div class="container">
     <div class="row">
         <div class="col text-centered">
-            <h2>Patient History list</h2>
+            <h2>Patient notes list</h2>
         </div>
     </div>
 </div>
@@ -22,36 +22,39 @@
     </div>
 </div>
 <div class="row">
+    <div>
+        <a class="btn btn-primary" th:href="@{/central/add-patient-notes/{patId}(patId=${patient.id})}" role="button"> Add</a>
+    </div>
     <table class="table table-bordered centered">
         <thead>
 
         <tr style="text-align:center">
-            <th>id</th>
+            <th>family name</th>
             <th>patient Id</th>
             <th>content</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="patientHist:${patHistList}" style="text-align:center">
-            <td><span th:text="${patientHist.id}"></span></td>
-            <td><span th:text="${patientHist.patId}"></span></td>
+        <tr th:each="notes:${patNotesList}" style="text-align:center">
+            <td><span th:text="${notes.family}"></span></td>
+            <td><span th:text="${notes.patId}"></span></td>
             <td>
                 <div class="card">
-                    <div class="card-body" th:text="${patientHist.content}">
+                    <div class="card-body" th:text="${notes.content}">
                     </div>
                 </div>
             </td>
             <td>
-                <a class="btn btn-primary" th:href="@{/central/update-patient-hist/{id}(id=${patientHist.id})}" role="button"> Edit</a>
-                <a class="btn btn-primary" th:href="@{/central/delete-patient-hist-by-id/{patId}(patId=${patientHist.patId})'&'{id}(id=${patientHist.id})}" role="button"> Delete</a>
+                <a class="btn btn-primary" th:href="@{/central/update-patient-notes/{id}(id=${notes.id})}" role="button"> Edit</a>
+                <a class="btn btn-primary" th:href="@{/central/delete-patient-notes-by-id/{id}(id=${notes.id})}" role="button"> Delete</a>
             </td>
-            <div>
-                <a class="btn btn-primary" th:href="@{/central/add-patient-hist/{patId}(patId=${patientHist.patId})}" role="button"> Add</a>
-            </div>
         </tr>
-
         </tbody>
     </table>
+    <div>
+        <a class="btn btn-primary" th:href="@{/central/get-patient-list}" role="button"> return to patient list</a>
+    </div>
+
 </div>
 
 

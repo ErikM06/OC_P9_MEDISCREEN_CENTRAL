@@ -8,22 +8,26 @@ import org.springframework.stereotype.Component;
 @Data
 public class PatientAssessmentDTO {
 
-    private String givenTest;
+    private String firstName;
 
-    private String familyTypeTest;
+    private String lastName;
 
     private int age;
 
-    private String diabetesAssessment;
+    private String assessment;
 
-    public PatientAssessmentDTO(String givenTest, String familyTypeTest, int age, String diabetesAssessment){
-        this.givenTest = givenTest;
-        this.familyTypeTest = familyTypeTest;
+    public PatientAssessmentDTO(String firstName, String lastName, int age, String assessment){
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.age = age;
-        this.diabetesAssessment = diabetesAssessment;
+        this.assessment = assessment;
     }
     public PatientAssessmentDTO(){
 
     }
+
+
+
+
 
 }

@@ -1,7 +1,7 @@
 package com.mediscreen.central.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 
-@Data
+@Setter
+@Getter
 @ToString
-@EqualsAndHashCode
 @Component
 public class Patient {
 
@@ -21,25 +21,25 @@ public class Patient {
 
     private String lastname;
 
-    private String family;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
 
-    private String given;
     private String sex;
     private String address;
     private String phone;
 
+    private String assessment;
 
 
-    Patient (String firstname, String lastname, Date dob, String sex, String address, String phone){
+
+    public Patient (String firstname, String lastname, Date dob, String sex, String address, String phone, String assessment){
         this.firstname =firstname;
         this.lastname = lastname;
         this.dob = dob;
         this.sex = sex;
         this.address = address;
         this.phone = phone;
+        this.assessment = assessment;
     }
 
     public Patient() {

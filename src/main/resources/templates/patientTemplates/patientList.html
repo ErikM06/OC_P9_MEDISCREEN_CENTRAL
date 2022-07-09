@@ -30,8 +30,7 @@
             <th>sex</th>
             <th>address</th>
             <th>phone</th>
-            <th>given</th>
-            <th>family</th>
+            <th>assessment</th>
         </tr>
         </thead>
         <tbody>
@@ -42,13 +41,12 @@
             <td><span th:text="${patient.sex}"></span></td>
             <td><span th:text="${patient.address}"></span></td>
             <td><span th:text="${patient.phone}"></span></td>
-            <td><span th:text="${patient.given}"></span></td>
-            <td><span th:text="${patient.family}"></span></td>
+            <td><span th:text="${patient.assessment}"></span></td>
             <td>
                 <a class="btn btn-primary" th:href="@{/central/update-patient/{id}(id=${patient.id})}" role="button"> Edit Patient info </a>
-                <a class="btn btn-primary" th:href="@{/central/get-patient-hist-list/{id}(id=${patient.id})}" role="button"> Go to Patient Obs </a>
+                <a class="btn btn-primary" th:href="@{/central/get-patient-notes-list/{id}(id=${patient.id})}" role="button"> Go to Patient Obs </a>
                 <a class="btn btn-primary" th:href="@{/central/delete-patient-by-id/{id}(id=${patient.id})}" role="button"> Delete</a>
-                <a class="btn btn-primary" th:href="@{/central/calculate-disease-risk-by-id/{patId}/{patId}(patId=${patient.id})}" role="button"> Calculate Diabetes Risk</a>
+                <a class="btn btn-primary" th:href="@{/central/calculate-disease-risk-by-id/{patId}(patId=${patient.id})}" role="button"> Calculate Diabetes Risk</a>
             </td>
 
         </tr>

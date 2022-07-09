@@ -10,21 +10,22 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: mediscreen-user
-          uri: lb://mediscreen-user
-          predicates:
-            - Path=/user/**
-
         - id: mediscreen-patient
           uri: lb://mediscreen-patient
           predicates:
             - Path=/patient/**
 
 
-        - id: mediscreen_hist
-          uri: lb://mediscreen-hist
+        - id: mediscreen_notes
+          uri: lb://mediscreen-notes
           predicates:
-            - Path=/patHistory/**
+            - Path=/pat-notes/**
+
+        - id: mediscreen-diabetesRiskService
+          uri: lb://mediscreen-assess
+          predicates:
+              - Path=/assess/**
+
       discovery:
         locator:
           enabled: true
