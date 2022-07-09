@@ -1,0 +1,24 @@
+services:
+  mediscreen:
+    image: mediscreen-gateway:1.0.0
+    ports:
+      - "8090:8090"
+    depends_on:
+      - mediscreen-patient
+      - mediscreen-notes
+      - mediscreen-risk
+
+  mediscreen-patient:
+    image: mediscreen-patient:1.0.0
+    ports:
+      - "8081:8081"
+
+  mediscreen-notes:
+    image: mediscreen-notes:1.0.0
+    ports:
+      - "8082:8082"
+
+  mediscreen-risk:
+    image: mediscreen-risk:1.0.0
+    ports:
+      - "8080:8080"
