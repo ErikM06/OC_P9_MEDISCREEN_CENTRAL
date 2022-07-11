@@ -23,7 +23,7 @@ public interface PatientClientProxy {
     Patient addPatient (@RequestBody Patient patient);
 
     @GetMapping ("/get-patient-by-family")
-    List<Patient> getPatientByFamily (@RequestParam String family);
+    List<Patient> getPatientByFamily (@RequestParam String lastname);
 
     @PostMapping ("/update")
     Patient updatePatient (@RequestBody Patient patient);

@@ -43,8 +43,8 @@ public class PatientController {
     }
 
     @GetMapping ("/get-patient-by-family")
-    public String getPatientByFamily (Model model, @RequestParam String family){
-        List<Patient> patientls = patientClientProxy.getPatientByFamily(family);
+    public String getPatientByFamily (Model model, @RequestParam String lastname){
+        List<Patient> patientls = patientClientProxy.getPatientByFamily(lastname);
         model.addAttribute("patientList",patientls);
         return "patientTemplates/patientList";
     }

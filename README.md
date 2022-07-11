@@ -8,6 +8,8 @@ P9-Développez une solution en microservices pour votre client - Murer Erik
 - Java 11 JDK
 - Gradle 7.4.1
 - Spring 2.7.1
+- MongoDB 
+- MySql 8.0.29
 - Docker
 
 ## Specifications techniques
