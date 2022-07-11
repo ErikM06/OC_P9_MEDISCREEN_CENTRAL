@@ -38,8 +38,8 @@
         </thead>
         <tbody>
         <tr th:object="${patient}" style="text-align:center">
-            <td><span th:text="${patient.firstname}"></span></td>
-            <td><span th:text="${patient.lastname}"></span></td>
+            <td><span th:text="${patient.getFirstName}"></span></td>
+            <td><span th:text="${patient.getLastName}"></span></td>
             <td><span th:text="${age}"></span></td>
             <td><span th:text="${patient.sex}"></span></td>
             <td><span th:text="${patient.phone}"></span></td>

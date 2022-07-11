@@ -57,7 +57,7 @@ public class PatientNotesController {
     @GetMapping("/add-patient-notes/{patId}")
     public String addPatientView (Model model, @PathVariable (value = "patId") Long id){
         Patient patient = patientClientProxy.getPatientById(id);
-        PatientNotes patientNotes = new PatientNotes(ObjectId.get().toString(), id, patient.getLastname());
+        PatientNotes patientNotes = new PatientNotes(ObjectId.get().toString(), id, patient.getLastName());
         model.addAttribute("patientNotes", patientNotes);
         return "patientNotesTemplates/addPatientNotes";
     }

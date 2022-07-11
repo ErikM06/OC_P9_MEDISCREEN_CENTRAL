@@ -6,6 +6,7 @@ import com.mediscreen.central.model.Patient;
 import com.mediscreen.central.proxy.PatientClientProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,19 +23,13 @@ import java.util.List;
 @RequestMapping("/central")
 public class PatientController {
     Logger logger = LoggerFactory.getLogger(PatientController.class);
-    private final PatientClientProxy patientClientProxy;
-
-
-
-    public PatientController (PatientClientProxy patientClientProxy){
-        this.patientClientProxy=patientClientProxy;
-
-    }
+    @Autowired
+    PatientClientProxy patientClientProxy;
 
 
     @GetMapping ("/get-patient-list")
     public String getPatient(Model model, @RequestParam(value = "error", required = false) String error) {
-
+        logger.info(""+patientClientProxy.getPatientList().get(1));
         model.addAttribute("patientList",  patientClientProxy.getPatientList());
         if (null != error) {
             model.addAttribute("error", error);

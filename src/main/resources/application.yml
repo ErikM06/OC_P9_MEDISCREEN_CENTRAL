@@ -21,7 +21,7 @@ spring:
           predicates:
             - Path=/pat-notes/**
 
-        - id: mediscreen-diabetesRiskService
+        - id: mediscreen-diabetesRisk
           uri: lb://mediscreen-assess
           predicates:
               - Path=/assess/**

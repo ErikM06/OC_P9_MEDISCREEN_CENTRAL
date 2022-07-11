@@ -16,14 +16,11 @@ import java.util.Date;
 public class Patient {
 
     private Long id;
-
-    private String firstname;
-
-    private String lastname;
+    private String firstName;
+    private String lastName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
-
     private String sex;
     private String address;
     private String phone;
@@ -32,9 +29,9 @@ public class Patient {
 
 
 
-    public Patient (String firstname, String lastname, Date dob, String sex, String address, String phone, String assessment){
-        this.firstname =firstname;
-        this.lastname = lastname;
+    public Patient (String firstName, String lastName, Date dob, String sex, String address, String phone, String assessment){
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.dob = dob;
         this.sex = sex;
         this.address = address;

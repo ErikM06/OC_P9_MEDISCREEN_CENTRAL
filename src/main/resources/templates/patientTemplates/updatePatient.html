@@ -21,18 +21,12 @@
         </div>
         <div class="row">
             <form th:action="@{/central/validate-update/{id}(id=${patient.id})}" th:object="${patient}" th:method="post" class="form-horizontal" style="width: 100%">
-                <input th:field="${patient.family}" id="family" name="family" placeholder="family">
-                <p th:if="${#fields.hasErrors('family')}" th:errorclass="error" th:errors="*{patient.family}"></p>
-                <input th:field="${patient.given}" id="given" name="given" placeholder="given">
-                <p th:if="${#fields.hasErrors('given')}" th:errorclass="error" th:errors="*{patient.given}"></p>
+                <input th:field="${patient.firstName}" id="firstname" name="firstname" placeholder="firstname">
+                <input th:field="${patient.lastName}" id="lastname" name="lastname" placeholder="lastname">
                 <input type="date" th:field="${patient.dob}" th:errorclass="fieldError"   id="dob" name="dob" placeholder="dob">
-                <p th:if="${#fields.hasErrors('dob')}" th:errorclass="error" th:errors="*{patient.dob}"></p>
                 <input th:field="${patient.sex}" th:errorclass="fieldError"   id="sex" name="sex" placeholder="sex">
-                <p th:if="${#fields.hasErrors('sex')}" th:errorclass="error" th:errors="*{patient.sex}"></p>
                 <input th:field="${patient.address}" th:errorclass="fieldError"   id="address" name="address" placeholder="address">
-                <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{patient.address}"></p>
                 <input th:field="${patient.phone}" th:errorclass="fieldError"   id="phone" name="phone" placeholder="phone">
-                <p th:if="${#fields.hasErrors('phone')}" th:errorclass="error" th:errors="*{patient.phone}"></p>
 
                 <button name="Save" class="btn btn-primary" type="submit" >Save</button>
                 <a name="Cancel" class="btn btn-primary" th:href="@{/central/get-patient-ls}" >Cancel</a>
